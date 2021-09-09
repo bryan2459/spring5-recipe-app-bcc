@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        td, th {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #dddddd;
+        }
+    </style>
+</head>
+<body>
+<h1 th:text="Recipes">My Recipes</h1>
+<table id="vets" class="table table-striped">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Description</th>
+        <th>Difficulty</th>
+        <th>Cook Time required:</th>
+        <th>Notes:</th>
+        <th>Direction</th>
+    </tr>
+    </thead>
+    <tbody>
+
+    <tr th:each="recipe : ${recipes}">
+        <td th:text="${recipe.id}">123</td>
+        <td th:text="${recipe.description}">Tasty Goodnees</td>
+        <td th:text="${recipe.getDifficulty()}">Tasty Goodnees</td>
+        <td th:text="${recipe.getCookTime()}">Tasty Goodnees</td>
+        <td th:text="${recipe.notes.recipeNotes  }">Tasty Goodnees</td>
+        <td th:text="${recipe.getDirections()}">Tasty Goodnees</td>
+        <!--
+        <tr th:each="ingredient : ${recipe.ingredients}">
+            <td th:text="${ingredient.id}">334</td>
+            <td th:text="${ingredient.amount} + ' ' + ${ingredient.uom.getDescription()} + ' ' + ${ingredient.description}">Tasty Goodnees 3</td>
+            <td><a href="#" th:href="@{'/recipe/' + ${recipe.id} + '/ingredient/' + ${ingredient.id} + '/show'}">View</a></td>
+            <td><a href="#" th:href="@{'/recipe/' + ${recipe.id} + '/ingredient/' + ${ingredient.id} + '/update'}">Update</a></td>
+            <td><a href="#" th:href="@{'/recipe/' + ${recipe.id} + '/ingredient/' + ${ingredient.id} + '/delete'}">Delete</a></td>
+        </tr>
+        -->
+    </tr>
+
+    </tbody>
+</table>
+</body>
+</html>
