@@ -1,5 +1,7 @@
 package bcc.springframework.services;
 
+import bcc.springframework.converters.RecipeCommandToRecipe;
+import bcc.springframework.converters.RecipeToRecipeCommand;
 import bcc.springframework.domain.Recipe;
 import bcc.springframework.repositories.RecipeRepository;
 import org.junit.Before;
@@ -11,8 +13,8 @@ import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
 /**
@@ -25,12 +27,17 @@ public class RecipeServiceImplTest {
     @Mock
     RecipeRepository recipeRepository;
 
+    @Mock
+    RecipeToRecipeCommand recipeToRecipeCommand;
+
+    @Mock
+    RecipeCommandToRecipe recipeCommandToRecipe;
 
     @Before
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
 
-        recipeService = new RecipeServiceImpl(recipeRepository);
+        recipeService = new RecipeServiceImpl(recipeRepository, recipeCommandToRecipe, recipeToRecipeCommand);
     }
 
     @Test
@@ -41,9 +48,9 @@ public class RecipeServiceImplTest {
 
         when(recipeRepository.findById(anyLong())).thenReturn(recipeOptional);
 
-      //  Recipe recipeReturned = recipeService.findById(1L);
+        Recipe recipeReturned = recipeService.findById(1L);
 
-      //  assertNotNull("Null recipe returned", recipeReturned);
+        assertNotNull("Null recipe returned", recipeReturned);
         verify(recipeRepository, times(1)).findById(anyLong());
         verify(recipeRepository, never()).findAll();
     }

@@ -1,5 +1,6 @@
 package bcc.springframework.services;
 
+import bcc.springframework.commands.RecipeCommand;
 import bcc.springframework.domain.Ingredient;
 import bcc.springframework.domain.Recipe;
 
@@ -14,4 +15,7 @@ public interface RecipeService {
 
     Recipe findById(Long l);
 
+    RecipeCommand findCommandById(Long l);
+
+    RecipeCommand saveRecipeCommand(RecipeCommand command);
 }
