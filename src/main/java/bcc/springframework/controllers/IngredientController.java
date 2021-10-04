@@ -1,6 +1,8 @@
 package bcc.springframework.controllers;
 
 import bcc.springframework.commands.IngredientCommand;
+import bcc.springframework.commands.RecipeCommand;
+import bcc.springframework.commands.UnitOfMeasureCommand;
 import bcc.springframework.services.IngredientService;
 import bcc.springframework.services.RecipeService;
 import bcc.springframework.services.UnitOfMeasureService;
@@ -43,6 +45,27 @@ public class IngredientController {
                                        @PathVariable String id, Model model){
         model.addAttribute("ingredient", ingredientService.findByRecipeIdAndIngredientId(Long.valueOf(recipeId), Long.valueOf(id)));
         return "recipe/ingredient/show";
+    }
+
+    @GetMapping
+    @RequestMapping("recipe/{recipeId}/ingredient/new")
+    public String newIngredient(@PathVariable String recipeId, Model model){
+
+        //make sure we have a good id value
+        RecipeCommand recipeCommand = recipeService.findCommandById(Long.valueOf(recipeId));
+        //todo raise exception if null
+
+        //need to return back parent id for hidden form property
+        IngredientCommand ingredientCommand = new IngredientCommand();
+        ingredientCommand.setRecipeId(Long.valueOf(recipeId));
+        model.addAttribute("ingredient", ingredientCommand);
+
+        //init uom
+        ingredientCommand.setUom(new UnitOfMeasureCommand());
+
+        model.addAttribute("uomList",  unitOfMeasureService.listAllUoms());
+
+        return "recipe/ingredient/ingredientform";
     }
 
     @GetMapping
